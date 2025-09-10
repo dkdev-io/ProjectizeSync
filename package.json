@@ -1,0 +1,49 @@
+{
+  "name": "projectizesync",
+  "version": "1.0.0",
+  "main": "src/main.jsx",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dkdev-io/ProjectizeSync.git"
+  },
+  "keywords": [
+    "motion",
+    "trello",
+    "sync",
+    "productivity",
+    "task-management"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dkdev-io/ProjectizeSync/issues"
+  },
+  "homepage": "https://github.com/dkdev-io/ProjectizeSync#readme",
+  "description": "Bidirectional sync between Motion and Trello with real-time conflict resolution",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
+    "dotenv": "^17.2.2",
+    "netlify-cli": "^23.5.1",
+    "puppeteer": "^24.19.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "vite": "^4.4.5"
+  }
+}
