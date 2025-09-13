@@ -29,7 +29,9 @@
   "description": "Bidirectional sync between Motion and Trello with real-time conflict resolution",
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.2",
+    "express": "^5.1.0",
     "netlify-cli": "^23.5.1",
     "node-fetch": "^3.3.2",
     "puppeteer": "^24.19.0",

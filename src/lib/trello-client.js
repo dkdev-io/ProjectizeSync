@@ -256,4 +256,4 @@ class TrelloClient {
   }
 }
 
-export default TrelloClient
+module.exports = TrelloClient

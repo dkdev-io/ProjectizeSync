@@ -187,4 +187,4 @@ class MotionClient {
   }
 }
 
-export default MotionClient
+module.exports = MotionClient

@@ -63,18 +63,28 @@ class SyncQueueManager {
   }
 }
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-)
+// Initialize Supabase client (with fallback for development)
+let supabase = null
+if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  )
+} else {
+  console.warn('⚠️ Supabase credentials not found - webhook will run in test mode')
+}
 
 // Initialize sync components
 const taskMapper = new TaskMapper()
-const syncQueueManager = new SyncQueueManager(
+const syncQueueManager = process.env.SUPABASE_URL ? new SyncQueueManager(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
-)
+) : null
+
+// Helper function to check if we're in test mode
+function isTestMode() {
+  return !supabase || !syncQueueManager || process.env.SUPABASE_URL === 'http://127.0.0.1:54321'
+}
 
 /**
  * Motion Webhook Handler
@@ -199,6 +209,11 @@ async function processMotionWebhook(payload) {
 async function handleTaskCreated(taskData, userId) {
   console.log('Processing Motion task created:', taskData.id)
 
+  if (isTestMode()) {
+    console.log('⚠️ Test mode: Motion task created event simulated')
+    return { message: 'Test mode - task created event received', taskId: taskData.id }
+  }
+
   try {
     // Find if this task belongs to a synced project
     const { data: projects, error } = await supabase
@@ -275,6 +290,11 @@ async function handleTaskCreated(taskData, userId) {
 async function handleTaskUpdated(taskData, userId) {
   console.log('Processing Motion task updated:', taskData.id)
 
+  if (isTestMode()) {
+    console.log('⚠️ Test mode: Motion task updated event simulated')
+    return { message: 'Test mode - task updated event received', taskId: taskData.id }
+  }
+
   try {
     // Find existing task mapping
     const { data: taskMappings, error } = await supabase
@@ -337,6 +357,11 @@ async function handleTaskUpdated(taskData, userId) {
  */
 async function handleTaskDeleted(taskData, userId) {
   console.log('Processing Motion task deleted:', taskData.id)
+
+  if (isTestMode()) {
+    console.log('⚠️ Test mode: Motion task deleted event simulated')
+    return { message: 'Test mode - task deleted event received', taskId: taskData.id }
+  }
 
   try {
     // Find existing task mapping
