@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { AuthProvider } from './hooks/useAuth'
+import { AuthProvider } from './hooks/useAuth.jsx'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import AuthPage from './components/auth/AuthPage'
 import AuthCallback from './components/auth/AuthCallback'

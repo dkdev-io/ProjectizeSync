@@ -7,11 +7,14 @@
 
 const express = require('express')
 const cors = require('cors')
+const path = require('path')
+const { createProxyMiddleware } = require('http-proxy-middleware')
 const { createClient } = require('@supabase/supabase-js')
 require('dotenv').config()
 
 const app = express()
 const PORT = process.env.PORT || 3001
+const VITE_PORT = 5175
 
 // Middleware
 app.use(cors())
@@ -214,21 +217,19 @@ app.use((error, req, res, next) => {
   })
 })
 
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ error: 'Endpoint not found' })
-})
+// Serve static files - frontend will run separately
+app.use(express.static('dist'))
 
 // Start server
 app.listen(PORT, () => {
-  console.log('\n🚀 ProjectizeSync Development Server')
-  console.log('=' .repeat(40))
-  console.log(`🌐 Server running at: http://localhost:${PORT}`)
+  console.log('\n🚀 ProjectizeSync Unified Development Server')
+  console.log('=' .repeat(50))
+  console.log(`🌐 Frontend & API: http://localhost:${PORT}`)
   console.log(`🏥 Health check: http://localhost:${PORT}/health`)
   console.log(`🔧 Motion test: http://localhost:${PORT}/test/motion`)
   console.log(`🔧 Trello test: http://localhost:${PORT}/test/trello`)
   console.log(`🔧 Supabase test: http://localhost:${PORT}/test/supabase`)
-  console.log('=' .repeat(40))
+  console.log('=' .repeat(50))
   
   if (!process.env.MOTION_CLIENT_ID || !process.env.TRELLO_API_KEY) {
     console.log('\n⚠️ API credentials not configured:')
